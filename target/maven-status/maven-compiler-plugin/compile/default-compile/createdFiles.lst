@@ -1,0 +1,10 @@
+br/com/api/order/consomer/sqs/service/AuthenticationSQS.class
+br/com/api/order/consomer/sqs/service/AuthenticationSQS$1$1.class
+br/com/api/order/consomer/sqs/Application.class
+br/com/api/order/consomer/sqs/model/Order.class
+br/com/api/order/consomer/sqs/service/ReceiveMessage.class
+br/com/api/order/consomer/sqs/service/SQSService.class
+br/com/api/order/consomer/sqs/service/ConfigurationsSQS.class
+br/com/api/order/consomer/sqs/service/AuthenticationSQS$1.class
+br/com/api/order/consomer/sqs/service/SendMessage.class
+br/com/api/order/consomer/sqs/service/DeleteMessage.class
