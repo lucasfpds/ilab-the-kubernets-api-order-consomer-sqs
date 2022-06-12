@@ -1,4 +1,4 @@
-package br.com.api.order.consomer.sqs.service;
+package br.com.api.order.consomer.sqs.service.sqs;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public class ReceiveMessage {
     public static List<Message> receiveMessages(SqsClient sqsClient, String queueUrl) {
         ReceiveMessageRequest receiveMessageRequest = ReceiveMessageRequest.builder()
                 .queueUrl(queueUrl)
-                .waitTimeSeconds(20)
+                .waitTimeSeconds(5)
                 .maxNumberOfMessages(5)
                 .build();
 

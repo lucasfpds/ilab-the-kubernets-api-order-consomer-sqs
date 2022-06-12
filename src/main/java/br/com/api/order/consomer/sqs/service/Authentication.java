@@ -3,8 +3,8 @@ package br.com.api.order.consomer.sqs.service;
 import software.amazon.awssdk.auth.credentials.AwsCredentials;
 import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
 
-public class AuthenticationSQS {
-    static AwsCredentialsProvider getCredentials() {
+public class Authentication {
+    public static AwsCredentialsProvider getCredentials() {
 
         AwsCredentialsProvider credentialsProvider = new AwsCredentialsProvider() {
             @Override

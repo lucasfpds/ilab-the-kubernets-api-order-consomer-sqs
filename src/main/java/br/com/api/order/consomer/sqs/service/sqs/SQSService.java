@@ -1,4 +1,4 @@
-package br.com.api.order.consomer.sqs.service;
+package br.com.api.order.consomer.sqs.service.sqs;
 
 import java.util.List;
 

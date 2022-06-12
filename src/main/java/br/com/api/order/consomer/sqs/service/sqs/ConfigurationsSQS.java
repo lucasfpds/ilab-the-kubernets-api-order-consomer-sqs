@@ -1,5 +1,6 @@
-package br.com.api.order.consomer.sqs.service;
+package br.com.api.order.consomer.sqs.service.sqs;
 
+import br.com.api.order.consomer.sqs.service.Authentication;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.sqs.SqsClient;
 import software.amazon.awssdk.services.sqs.model.*;
@@ -9,7 +10,7 @@ public class ConfigurationsSQS {
         
         SqsClient sqsClient = SqsClient.builder()
             .region(Region.US_EAST_1)
-            .credentialsProvider(AuthenticationSQS.getCredentials())
+            .credentialsProvider(Authentication.getCredentials())
             .build();
         
         return sqsClient;

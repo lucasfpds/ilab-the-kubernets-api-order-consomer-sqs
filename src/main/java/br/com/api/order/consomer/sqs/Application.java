@@ -3,7 +3,7 @@ package br.com.api.order.consomer.sqs;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import br.com.api.order.consomer.sqs.service.SQSService;
+import br.com.api.order.consomer.sqs.service.sqs.SQSService;
 
 @SpringBootApplication
 public class Application {
