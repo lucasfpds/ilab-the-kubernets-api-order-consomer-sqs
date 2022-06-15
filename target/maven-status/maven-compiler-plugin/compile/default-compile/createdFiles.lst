@@ -11,4 +11,5 @@ br/com/api/order/consomer/sqs/service/Authentication$1.class
 br/com/api/order/consomer/sqs/Application.class
 br/com/api/order/consomer/sqs/service/ses/SESService.class
 br/com/api/order/consomer/sqs/service/sqs/ReceiveMessage.class
+br/com/api/order/consomer/sqs/service/sqs/SQSServiceProducer.class
 br/com/api/order/consomer/sqs/service/ses/Configurations.class

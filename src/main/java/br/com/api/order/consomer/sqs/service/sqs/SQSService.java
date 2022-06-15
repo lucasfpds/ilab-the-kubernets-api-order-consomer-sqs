@@ -11,43 +11,48 @@ import software.amazon.awssdk.services.sqs.model.GetQueueUrlResponse;
 import software.amazon.awssdk.services.sqs.model.Message;
 
 public class SQSService {
-    public static Integer messageService(Integer count) {
+    public static Integer messageService(Integer count) throws Exception {
         SqsClient sqsClient = ConfigurationsSQS.getSqsClient();
         GetQueueUrlResponse createResult = ConfigurationsSQS.getCreateResultReceive();
 
-        List<Message> messages = ReceiveMessage.receiveMessages(sqsClient, createResult.queueUrl());
+        try {
+            List<Message> messages = ReceiveMessage.receiveMessages(sqsClient, createResult.queueUrl());
 
-        OrderDTO jsonPedido = new OrderDTO();
+            OrderDTO jsonPedido = new OrderDTO();
 
-        for (Message msg : messages) {
-            String stringMessage = msg.body();
+            for (Message msg : messages) {
+                String stringMessage = msg.body();
 
-            jsonPedido = new Gson().fromJson(stringMessage, OrderDTO.class);
-    
-            if (jsonPedido.getStatus().equals("aberto")) {
-                String statusEmail = SESService.sendMessage("🚩 Status do Pedido 🚩", jsonPedido.getEmailUser(), msg);
-                
-                if(statusEmail == "Ok. E-mail enviado!") {
-                    jsonPedido.setStatusEmail("enviado");
-                    jsonPedido.setStatus("concluído");                       
-                    
-                    String stringPedidoOut = new Gson().toJson(jsonPedido);
-                    SendMessageSQS.sendMessage(sqsClient, 
-                            ConfigurationsSQS.getCreateResultSend().queueUrl(), 
-                            stringPedidoOut);
+                jsonPedido = new Gson().fromJson(stringMessage, OrderDTO.class);
+
+                if (jsonPedido.getStatus().equals("aberto")) {
+                    jsonPedido.setStatus("concluído");
+
+                    String statusEmail = SESService.sendMessage("🚩 Status do Pedido 🚩", jsonPedido.getEmailUser(),
+                            msg);
+
+                    if (statusEmail == "Ok. E-mail enviado!") {
+                        jsonPedido.setStatusEmail("enviado");
+
+                        String stringPedidoOut = new Gson().toJson(jsonPedido);
+                        SQSServiceProducer.sendMessageProducer(stringPedidoOut, jsonPedido.getIdAdmin().toString());
+                    }
+
+                    count++;
                 }
-
-                count++;
             }
-        }
 
-        if(!messages.isEmpty() && count == 3) {
-            String stringPedidoOut = new Gson().toJson(jsonPedido);
-            SendMessageSQS.sendMessage(sqsClient, ConfigurationsSQS.getCreateResultSend().queueUrl(), stringPedidoOut);
-        }
-    
-        sqsClient.close();
+            if (!messages.isEmpty() && count == 3) {
+                String stringPedidoOut = new Gson().toJson(jsonPedido);
+                SQSServiceProducer.sendMessageProducer(stringPedidoOut,
+                        jsonPedido.getIdAdmin().toString());
+            }
 
-        return count;
+            sqsClient.close();
+
+            return count;
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
     }
 }
