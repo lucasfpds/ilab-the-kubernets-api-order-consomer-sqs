@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 public class OrderDTO {
     private Integer idAdmin;
     private Integer idUser;
+    private String nameUser;
     private String emailUser;
     private String description;
     private Integer totalValue;
@@ -13,13 +14,15 @@ public class OrderDTO {
     private String statusEmail = "não enviado";
 
     public OrderDTO() {
-        
+
     }
 
-    public OrderDTO(Integer idAdmin, Integer idUser, String emailUser, String description, Integer totalValue,
-            Timestamp ordersDate) {
+    public OrderDTO(Integer idAdmin, Integer idUser,
+            String nameUser, String emailUser, String description,
+            Integer totalValue, Timestamp ordersDate) {
         this.idAdmin = idAdmin;
         this.idUser = idUser;
+        this.nameUser = nameUser;
         this.emailUser = emailUser;
         this.description = description;
         this.totalValue = totalValue;
@@ -40,6 +43,14 @@ public class OrderDTO {
 
     public void setIdUser(Integer idUser) {
         this.idUser = idUser;
+    }
+
+    public String getNameUser() {
+        return nameUser;
+    }
+
+    public void setNameUser(String nameUser) {
+        this.nameUser = nameUser;
     }
 
     public String getEmailUser() {

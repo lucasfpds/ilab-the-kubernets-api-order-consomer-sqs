@@ -28,8 +28,11 @@ public class SQSService {
                 if (jsonPedido.getStatus().equals("aberto")) {
                     jsonPedido.setStatus("concluído");
 
-                    String statusEmail = SESService.sendMessage("🚩 Status do Pedido 🚩", jsonPedido.getEmailUser(),
-                            msg);
+                    String statusEmail = SESService.sendMessage("🚩 Status do Pedido 🚩", 
+                                                                jsonPedido.getNameUser(), 
+                                                                jsonPedido.getEmailUser(),
+                                                                jsonPedido.getDescription(),
+                                                                msg);
 
                     if (statusEmail == "Ok. E-mail enviado!") {
                         jsonPedido.setStatusEmail("enviado");

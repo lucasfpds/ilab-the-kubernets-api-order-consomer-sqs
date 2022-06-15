@@ -9,22 +9,22 @@ import software.amazon.awssdk.services.ses.SesClient;
 import software.amazon.awssdk.services.sqs.model.Message;
 
 public class SESService {
-    public static String sendMessage(String subject, String user, Message msg) {
+    public static String sendMessage(String subject, String nameUser, String emailUser, String description, Message msg) {
         SesClient sesClient = Configurations.getSesClient();
 
-        String bodyText = "O status do seu pedido foi atualizado.";
+       String bodyText = "Status do seu pedido: " + description;
 
         String bodyHTML = "<html>"
                 + "<head></head>"
                 + "<body>"
-                + "<h1>Olá " + user + "! Tudo bom? </h1>"
+                + "<p>Olá " + nameUser + "! Tudo bom? </p>"
                 + "<p> Temos uma ótima notícia para você. O seu pedido foi realizado com sucesso!</p>"
                 + "</body>"
                 + "</html>";
 
         try {
             MimeMessage messageMime = SendMessage.send(sesClient, "thekubernetes4@gmail.com", 
-                                                        user, subject, bodyText, bodyHTML);
+                                                        emailUser, subject, bodyText, bodyHTML);
 
             String statusEmail = ByteMessage.sendByte(messageMime, msg);
 
