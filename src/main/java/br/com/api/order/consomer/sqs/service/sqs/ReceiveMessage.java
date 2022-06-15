@@ -8,14 +8,14 @@ import software.amazon.awssdk.services.sqs.model.*;
 
 public class ReceiveMessage {
     SqsClient sqsClient = ConfigurationsSQS.getSqsClient();
-    GetQueueUrlResponse createResult = ConfigurationsSQS.getCreateResult();
+    GetQueueUrlResponse createResult = ConfigurationsSQS.getCreateResultReceive();
 
     List<Message> messages = receiveMessages(sqsClient, createResult.queueUrl());
 
     public static List<Message> receiveMessages(SqsClient sqsClient, String queueUrl) {
         ReceiveMessageRequest receiveMessageRequest = ReceiveMessageRequest.builder()
                 .queueUrl(queueUrl)
-                .waitTimeSeconds(5)
+                .waitTimeSeconds(2)
                 .maxNumberOfMessages(5)
                 .build();
 

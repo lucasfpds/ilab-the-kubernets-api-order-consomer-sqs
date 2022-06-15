@@ -3,20 +3,35 @@ package br.com.api.order.consomer.sqs.dto;
 import java.sql.Timestamp;
 
 public class OrderDTO {
+    private Integer idAdmin;
     private Integer idUser;
     private String emailUser;
     private String description;
     private Integer totalValue;
     private Timestamp ordersDate;
     private String status = "aberto";
-    
-    public OrderDTO(Integer idUser, String emailUser, String description, Integer totalValue,
+    private String statusEmail = "não enviado";
+
+    public OrderDTO() {
+        
+    }
+
+    public OrderDTO(Integer idAdmin, Integer idUser, String emailUser, String description, Integer totalValue,
             Timestamp ordersDate) {
+        this.idAdmin = idAdmin;
         this.idUser = idUser;
         this.emailUser = emailUser;
         this.description = description;
         this.totalValue = totalValue;
         this.ordersDate = ordersDate;
+    }
+
+    public Integer getIdAdmin() {
+        return idAdmin;
+    }
+
+    public void setIdAdmin(Integer idAdmin) {
+        this.idAdmin = idAdmin;
     }
 
     public Integer getIdUser() {
@@ -65,5 +80,13 @@ public class OrderDTO {
 
     public void setStatus(String status) {
         this.status = status;
-    }  
+    }
+
+    public String getStatusEmail() {
+        return statusEmail;
+    }
+
+    public void setStatusEmail(String statusEmail) {
+        this.statusEmail = statusEmail;
+    }
 }

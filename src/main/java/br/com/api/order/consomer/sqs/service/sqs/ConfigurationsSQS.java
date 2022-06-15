@@ -6,7 +6,7 @@ import software.amazon.awssdk.services.sqs.SqsClient;
 import software.amazon.awssdk.services.sqs.model.*;
 
 public class ConfigurationsSQS {
-    static SqsClient getSqsClient() { 
+    public static SqsClient getSqsClient() { 
         
         SqsClient sqsClient = SqsClient.builder()
             .region(Region.US_EAST_1)
@@ -16,15 +16,27 @@ public class ConfigurationsSQS {
         return sqsClient;
     }
 
-    static GetQueueUrlRequest getUrlRequest() {
+    static GetQueueUrlRequest getUrlRequestSend() {
         GetQueueUrlRequest request = GetQueueUrlRequest.builder()
-                .queueName("grupo4-sqs").build();
+                .queueName("queue-grupo4-order").build();
         return request;
     }
 
-    static GetQueueUrlResponse getCreateResult() {
-        GetQueueUrlResponse createResult = getSqsClient().getQueueUrl(getUrlRequest());
-    
+    static GetQueueUrlRequest getUrlRequestReceive() {
+        GetQueueUrlRequest request = GetQueueUrlRequest.builder()
+                .queueName("queue-grupo4").build();
+        return request;
+    }
+
+    public static GetQueueUrlResponse getCreateResultSend() {
+        GetQueueUrlResponse createResult = getSqsClient().getQueueUrl(getUrlRequestSend());
+
+        return createResult;
+    }
+
+    public static GetQueueUrlResponse getCreateResultReceive() {
+        GetQueueUrlResponse createResult = getSqsClient().getQueueUrl(getUrlRequestReceive());
+
         return createResult;
     }
 }

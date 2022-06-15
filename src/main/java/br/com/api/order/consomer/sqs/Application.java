@@ -12,9 +12,12 @@ public class Application {
 		
 		SpringApplication.run(Application.class, args);
 
-		while(true) {
+		Integer count = 0;
+
+		while(true) {			
 			System.out.println("Read messages ...");
-			SQSService.messageService();
+			
+			count = SQSService.messageService(count);
 		}
 	}
 }
