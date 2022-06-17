@@ -7,22 +7,15 @@ import java.nio.ByteBuffer;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
-import br.com.api.order.consomer.sqs.service.sqs.ConfigurationsSQS;
-import br.com.api.order.consomer.sqs.service.sqs.DeleteMessage;
 import software.amazon.awssdk.core.SdkBytes;
 import software.amazon.awssdk.services.ses.SesClient;
 import software.amazon.awssdk.services.ses.model.RawMessage;
 import software.amazon.awssdk.services.ses.model.SendRawEmailRequest;
 import software.amazon.awssdk.services.ses.model.SesException;
-import software.amazon.awssdk.services.sqs.SqsClient;
-import software.amazon.awssdk.services.sqs.model.GetQueueUrlResponse;
 import software.amazon.awssdk.services.sqs.model.Message;
 
 public class ByteMessage {
     public static String sendByte(MimeMessage message, Message msg) throws IOException, MessagingException {
-        SqsClient sqsClient = ConfigurationsSQS.getSqsClient();
-        GetQueueUrlResponse createResult = ConfigurationsSQS.getCreateResultReceive();
-
         SesClient sesClient = Configurations.getSesClient();
 
         try {
@@ -43,8 +36,6 @@ public class ByteMessage {
                     .build();
 
             sesClient.sendRawEmail(rawEmailRequest);
-            
-            DeleteMessage.deleteMessages(sqsClient, createResult.queueUrl(), msg);
 
             return "E-mail enviado com sucesso!";
         } catch (SesException e) {

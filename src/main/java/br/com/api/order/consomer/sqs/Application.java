@@ -1,5 +1,8 @@
 package br.com.api.order.consomer.sqs;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -12,12 +15,15 @@ public class Application {
 		
 		SpringApplication.run(Application.class, args);
 
-		Integer count = 0;
+		List<Integer> contadores = new ArrayList<Integer>();
+
+		contadores.add(0, 0);
+		contadores.add(1, 0);
 
 		while(true) {			
 			System.out.println("Read messages ...");
 			
-			count = SQSService.messageService(count);
+			contadores = SQSService.messageService(contadores);
 		}
 	}
 }

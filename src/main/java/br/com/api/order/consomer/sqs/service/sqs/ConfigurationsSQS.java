@@ -16,27 +16,9 @@ public class ConfigurationsSQS {
         return sqsClient;
     }
 
-    static GetQueueUrlRequest getUrlRequestSend() {
+    public static GetQueueUrlRequest getUrlRequest(String nomeFila) {
         GetQueueUrlRequest request = GetQueueUrlRequest.builder()
-                .queueName("queue-grupo4-order").build();
+                .queueName(nomeFila).build();
         return request;
-    }
-
-    static GetQueueUrlRequest getUrlRequestReceive() {
-        GetQueueUrlRequest request = GetQueueUrlRequest.builder()
-                .queueName("queue-grupo4").build();
-        return request;
-    }
-
-    public static GetQueueUrlResponse getCreateResultSend() {
-        GetQueueUrlResponse createResult = getSqsClient().getQueueUrl(getUrlRequestSend());
-
-        return createResult;
-    }
-
-    public static GetQueueUrlResponse getCreateResultReceive() {
-        GetQueueUrlResponse createResult = getSqsClient().getQueueUrl(getUrlRequestReceive());
-
-        return createResult;
     }
 }

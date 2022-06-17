@@ -11,9 +11,12 @@ import software.amazon.awssdk.services.sqs.model.GetQueueUrlResponse;
 import software.amazon.awssdk.services.sqs.model.Message;
 
 public class SQSService {
-    public static Integer messageService(Integer count) throws Exception {
+    public static List<Integer> messageService(List contadores) throws Exception {
         SqsClient sqsClient = ConfigurationsSQS.getSqsClient();
-        GetQueueUrlResponse createResult = ConfigurationsSQS.getCreateResultReceive();
+        GetQueueUrlResponse createResult = CreateResultReceive.getCreateResult();
+
+        Integer count = (Integer) contadores.get(0);
+        Integer countDlq = (Integer) contadores.get(1);
 
         try {
             List<Message> messages = ReceiveMessage.receiveMessages(sqsClient, createResult.queueUrl());
@@ -27,6 +30,7 @@ public class SQSService {
 
                 if (jsonPedido.getStatus().equals("aberto")) {
                     jsonPedido.setStatus("concluído");
+                    count++;
 
                     String statusEmail = SESService.sendMessage("🚩 Status do Pedido 🚩", 
                                                                 jsonPedido.getNameUser(), 
@@ -39,21 +43,34 @@ public class SQSService {
 
                         String stringPedidoOut = new Gson().toJson(jsonPedido);
                         SQSServiceProducer.sendMessageProducer(stringPedidoOut, jsonPedido.getIdAdmin().toString());
-                    }
+                        DeleteMessage.deleteMessages(sqsClient, createResult.queueUrl(), msg);
 
-                    count++;
+                        count = 0;
+                    }
                 }
             }
 
             if (!messages.isEmpty() && count == 3) {
+                if(countDlq == 250) {                  
+                    PurgeQueue.purgeQueue();
+                    countDlq = 0;
+                }
+
                 String stringPedidoOut = new Gson().toJson(jsonPedido);
                 SQSServiceProducer.sendMessageProducer(stringPedidoOut,
                         jsonPedido.getIdAdmin().toString());
+
+                count = 0;
+                countDlq++;
             }
 
+            
+            contadores.set(0, count);
+            contadores.set(1, countDlq);
+            
             sqsClient.close();
 
-            return count;
+            return contadores;
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }

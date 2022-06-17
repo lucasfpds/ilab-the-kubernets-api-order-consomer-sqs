@@ -10,7 +10,7 @@ import software.amazon.awssdk.services.sqs.model.MessageAttributeValue;
 public class SQSServiceProducer {
     public static void sendMessageProducer(String order, String code) {
         SqsClient sqsClient = ConfigurationsSQS.getSqsClient();
-        GetQueueUrlResponse createResult = ConfigurationsSQS.getCreateResultSend(); 
+        GetQueueUrlResponse createResult = CreateResultSend.getCreateResult();
         
         final Map<String, MessageAttributeValue> messageAttributes = new HashMap<>();
 
