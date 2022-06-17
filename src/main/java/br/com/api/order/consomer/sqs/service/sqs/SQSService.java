@@ -11,7 +11,7 @@ import software.amazon.awssdk.services.sqs.model.GetQueueUrlResponse;
 import software.amazon.awssdk.services.sqs.model.Message;
 
 public class SQSService {
-    public static List<Integer> messageService(List contadores) throws Exception {
+    public static List<Integer> messageService(List<Integer> contadores) throws Exception {
         SqsClient sqsClient = ConfigurationsSQS.getSqsClient();
         GetQueueUrlResponse createResult = CreateResultReceive.getCreateResult();
 
