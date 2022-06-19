@@ -1,6 +1,7 @@
 br/com/api/order/consomer/sqs/service/sqs/CreateResultSend.class
 br/com/api/order/consomer/sqs/service/sqs/CreateResultReceive.class
 br/com/api/order/consomer/sqs/service/sqs/SQSService.class
+br/com/api/order/consomer/sqs/config/ThymeleafTemplateConfig.class
 br/com/api/order/consomer/sqs/service/Authentication$1$1.class
 br/com/api/order/consomer/sqs/service/sqs/PurgeQueue.class
 br/com/api/order/consomer/sqs/service/sqs/DeleteMessage.class

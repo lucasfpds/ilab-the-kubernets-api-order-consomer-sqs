@@ -19,11 +19,13 @@ public class Application {
 
 		contadores.add(0, 0);
 		contadores.add(1, 0);
-
+		
+		SQSService sqsService = new SQSService();
+		
 		while(true) {			
 			System.out.println("Read messages ...");
 			
-			contadores = SQSService.messageService(contadores);
+			contadores = sqsService.messageService(contadores);
 		}
 	}
 }

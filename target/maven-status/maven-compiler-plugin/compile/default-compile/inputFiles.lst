@@ -14,3 +14,4 @@
 /Users/yhaohannah.pamela/Documents/gama-academy/modulo2/desafio-modulo2/api.order.consomer.sqs/src/main/java/br/com/api/order/consomer/sqs/service/sqs/ConfigurationsSQS.java
 /Users/yhaohannah.pamela/Documents/gama-academy/modulo2/desafio-modulo2/api.order.consomer.sqs/src/main/java/br/com/api/order/consomer/sqs/service/Authentication.java
 /Users/yhaohannah.pamela/Documents/gama-academy/modulo2/desafio-modulo2/api.order.consomer.sqs/src/main/java/br/com/api/order/consomer/sqs/service/ses/ByteMessage.java
+/Users/yhaohannah.pamela/Documents/gama-academy/modulo2/desafio-modulo2/api.order.consomer.sqs/src/main/java/br/com/api/order/consomer/sqs/config/ThymeleafTemplateConfig.java

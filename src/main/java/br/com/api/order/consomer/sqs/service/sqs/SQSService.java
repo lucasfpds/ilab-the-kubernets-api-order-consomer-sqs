@@ -4,6 +4,11 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring5.SpringTemplateEngine;
+
+import br.com.api.order.consomer.sqs.config.ThymeleafTemplateConfig;
 import br.com.api.order.consomer.sqs.dto.OrderDTO;
 import br.com.api.order.consomer.sqs.service.ses.SESService;
 import software.amazon.awssdk.services.sqs.SqsClient;
@@ -11,7 +16,10 @@ import software.amazon.awssdk.services.sqs.model.GetQueueUrlResponse;
 import software.amazon.awssdk.services.sqs.model.Message;
 
 public class SQSService {
-    public static List<Integer> messageService(List<Integer> contadores) throws Exception {
+    @Autowired
+    ThymeleafTemplateConfig ttconfig = new ThymeleafTemplateConfig();
+
+    public List<Integer> messageService(List<Integer> contadores) throws Exception {
         SqsClient sqsClient = ConfigurationsSQS.getSqsClient();
         GetQueueUrlResponse createResult = CreateResultReceive.getCreateResult();
 
@@ -32,8 +40,10 @@ public class SQSService {
                     jsonPedido.setStatus("concluído");
                     count++;
 
-                    String statusEmail = SESService.sendMessage("🚩 Status do Pedido 🚩", 
-                                                                jsonPedido.getNameUser(), 
+                    String html = this.htmlToString(jsonPedido.getNameUser(), ttconfig);                    
+
+                    String statusEmail = SESService.sendMessage("🚩 Atualização do seu Pedido 🚩", 
+                                                                html, 
                                                                 jsonPedido.getEmailUser(),
                                                                 jsonPedido.getDescription(),
                                                                 msg);
@@ -74,5 +84,16 @@ public class SQSService {
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
+    }
+
+    private String htmlToString(String nameUser, ThymeleafTemplateConfig ttconfig) {
+        SpringTemplateEngine templateEngine = ttconfig.springTemplateEngine();
+
+        Context context = new Context();
+        context.setVariable("name", nameUser);
+
+        String html = templateEngine.process("mail-template.html", context);
+
+        return html;
     }
 }
