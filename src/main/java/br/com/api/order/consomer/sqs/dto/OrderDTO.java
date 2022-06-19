@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 public class OrderDTO {
     private Integer idAdmin;
+    private String emailAdmin;
     private Integer idUser;
     private String nameUser;
     private String emailUser;
@@ -17,10 +18,11 @@ public class OrderDTO {
 
     }
 
-    public OrderDTO(Integer idAdmin, Integer idUser,
+    public OrderDTO(Integer idAdmin, String emailAdmin, Integer idUser,
             String nameUser, String emailUser, String description,
             Integer totalValue, Timestamp ordersDate) {
         this.idAdmin = idAdmin;
+        this.emailAdmin = emailAdmin;
         this.idUser = idUser;
         this.nameUser = nameUser;
         this.emailUser = emailUser;
@@ -35,6 +37,14 @@ public class OrderDTO {
 
     public void setIdAdmin(Integer idAdmin) {
         this.idAdmin = idAdmin;
+    }
+
+    public String getEmailAdmin() {
+        return emailAdmin;
+    }
+
+    public void setEmailAdmin(String emailAdmin) {
+        this.emailAdmin = emailAdmin;
     }
 
     public Integer getIdUser() {

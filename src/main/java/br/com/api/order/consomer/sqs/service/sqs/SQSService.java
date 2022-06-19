@@ -44,6 +44,7 @@ public class SQSService {
 
                     String statusEmail = SESService.sendMessage("🚩 Atualização do seu Pedido 🚩", 
                                                                 html, 
+                                                                jsonPedido.getEmailAdmin(),
                                                                 jsonPedido.getEmailUser(),
                                                                 jsonPedido.getDescription(),
                                                                 msg);
