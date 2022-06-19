@@ -11,17 +11,8 @@ import software.amazon.awssdk.services.sqs.model.Message;
 public class SESService {
     public static String sendMessage(String subject, String html, String emailUser, String description, Message msg) {
         SesClient sesClient = Configurations.getSesClient();
-
-    //    String bodyText = "Status do seu pedido: " + description;
-       String bodyHtml = html;
-
-        // String bodyHTML = "<html>"
-        //         + "<head></head>"
-        //         + "<body>"
-        //         + "<p>Olá " + emailUser + "! Tudo bom? </p>"
-        //         + "<p> Temos uma ótima notícia para você. O seu pedido foi realizado com sucesso!</p>"
-        //         + "</body>"
-        //         + "</html>";
+       
+        String bodyHtml = html;
 
         try {
             MimeMessage messageMime = SendMessage.send(sesClient, "thekubernetes4@gmail.com", 
