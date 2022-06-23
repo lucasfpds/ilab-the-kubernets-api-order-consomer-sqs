@@ -41,8 +41,8 @@ docker:
   - test
   
   script:
-    - docker build -t "$CI_REGISTRY_USER/consomer-sqs-pipe:v1" .
-    - docker push "$CI_REGISTRY_USER/consomer-sqs-pipe:v1"
+    - docker build -t "$CI_REGISTRY_USER/consomer-pipe:v1" .
+    - docker push "$CI_REGISTRY_USER/consomer-pipe:v1"
 
   only:
     - main
