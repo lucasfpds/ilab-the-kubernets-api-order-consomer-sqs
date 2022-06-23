@@ -27,23 +27,23 @@ test:
     - main
     - develop
 
-docker:
-  stage: docker
+# docker:
+#   stage: docker
 
-  services:
-  - docker:dind
+#   services:
+#   - docker:dind
 
-  before_script:
-    - docker info
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
+#   before_script:
+#     - docker info
+#     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
   
-  dependencies:
-  - test
+#   dependencies:
+#   - test
   
-  script:
-    - docker build -t "$CI_REGISTRY_USER/api-order-teste:v1" .
-    - docker push "$CI_REGISTRY_USER/api-order-teste:v1"
+#   script:
+#     - docker build -t "$CI_REGISTRY_USER/api-order-teste:v1" .
+#     - docker push "$CI_REGISTRY_USER/api-order-teste:v1"
 
-  only:
-    - main
-    - develop
+#   only:
+#     - main
+#     - develop
