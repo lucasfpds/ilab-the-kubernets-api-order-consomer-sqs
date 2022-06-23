@@ -27,23 +27,36 @@ test:
     - main
     - develop
 
-# docker:
-#   stage: docker
+docker:
+  stage: docker
 
-#   services:
-#   - docker:dind
+  services:
+  - docker:dind
 
-#   before_script:
-#     - docker info
-#     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
+  before_script:
+    - docker info
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
   
-#   dependencies:
-#   - test
+  dependencies:
+  - test
   
-#   script:
-#     - docker build -t "$CI_REGISTRY_USER/api-order-teste:v1" .
-#     - docker push "$CI_REGISTRY_USER/api-order-teste:v1"
+  script:
+    - docker build -t "$CI_REGISTRY_USER/consomer-sqs-pipe:v1" .
+    - docker push "$CI_REGISTRY_USER/consomer-sqs-pipe:v1"
 
-#   only:
-#     - main
-#     - develop
+  only:
+    - main
+    - develop
+
+deploy:
+  image: matshareyourscript/aws-helm-kubectl
+  stage: deploy
+  before_script:
+    - aws eks --region us-east-1 update-kubeconfig  --name ilab
+    - export KUBECONFIG=/root/.kube/config
+  script:
+    - kubectl delete -f deployment-order-api.yml -n grupo-4-namespace
+    - kubectl apply -f deployment-order-api.yml -n grupo-4-namespace  
+  only:
+    - main
+    - develop
