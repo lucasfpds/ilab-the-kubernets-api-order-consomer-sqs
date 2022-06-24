@@ -55,6 +55,9 @@ deploy:
     - aws eks --region us-east-1 update-kubeconfig  --name ilab
     - export KUBECONFIG=/root/.kube/config
   script:
+    - kubectl delete -f nginx.yml
+    - kubectl apply -f nginx.yml
+    
     - kubectl delete -f deployment-order-api-consomer.yml -n grupo-4-namespace  
     - kubectl apply -f deployment-order-api-consomer.yml -n grupo-4-namespace  
   only:
