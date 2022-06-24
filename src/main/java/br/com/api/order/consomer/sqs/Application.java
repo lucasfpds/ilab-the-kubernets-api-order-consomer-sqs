@@ -22,9 +22,7 @@ public class Application {
 		
 		SQSService sqsService = new SQSService();
 		
-		while(true) {			
-			System.out.println("Read messages ...");
-			
+		while(true) {						
 			contadores = sqsService.messageService(contadores);
 		}
 	}

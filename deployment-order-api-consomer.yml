@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-order-api-consomer
+  namespace: grupo-4-namespace
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: deployment-order-api-consomer
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: deployment-order-api-consomer
+    spec:
+      containers:
+        - name: rvsfrebeca-order-api-consomer
+          image: rvsfrebeca/imagem-order-api-consomer
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8083
+          env:
+            - name: AWS_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: db-key-secret-credentials
+                  key: AWS_ACCESS_KEY
+            - name: AWS_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: db-key-secret-credentials
+                  key: AWS_SECRET_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: clusterip-consomer
+  namespace: grupo-4-namespace
+spec:
+  type: ClusterIP
+  selector:
+    app: deployment-order-api-consomer
+  ports:
+    - port: 8083
+      targetPort: 8083
