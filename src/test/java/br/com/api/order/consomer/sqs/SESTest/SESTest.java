@@ -1,6 +1,6 @@
+
 package br.com.api.order.consomer.sqs.SESTest;
 
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import java.io.IOException;
